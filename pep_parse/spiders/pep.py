@@ -1,12 +1,17 @@
+import re
 import scrapy
 
 from ..items import PepParseItem
+from ..settings import PEPS_DOMAINS, URL
+
+
+PATERN_NUMBER_NAME = r'\w*\W*(?P<number>\d+)\W+(?P<name>.+)'
 
 
 class PepSpider(scrapy.Spider):
     name = 'pep'
-    allowed_domains = ['peps.python.org']
-    start_urls = ['https://peps.python.org/']
+    allowed_domains = [PEPS_DOMAINS]
+    start_urls = [URL.format(url=PEPS_DOMAINS)]
 
     def parse(self, response):
         for pep_link in response.css('#numerical-index tbody tr'):
@@ -14,10 +19,13 @@ class PepSpider(scrapy.Spider):
                 pep_link.css('a::attr(href)').get(), callback=self.parse_pep)
 
     def parse_pep(self, response):
-        title = response.css('h1.page-title::text').get()
+        number, name = re.search(
+            PATERN_NUMBER_NAME,
+            "".join(response.css("#pep-content h1 ::text").get()),
+        ).groups()
         data = {
-            'number': title.split(' ')[1],
-            'name': title.split('– ')[1],
+            'number': number,
+            'name': name,
             'status': response.css(
                 'dt:contains("Status") + dd abbr::text'
             ).get()

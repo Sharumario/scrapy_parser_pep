@@ -1,23 +1,27 @@
 from pathlib import Path
 
 
-SPIDER_MODULES = ['pep_parse.spiders']
-NEWSPIDER_MODULE = 'pep_parse.spiders'
+PEP_PARSE_SPIDERS = 'pep_parse.spiders'
+SPIDER_MODULES = [PEP_PARSE_SPIDERS]
+NEWSPIDER_MODULE = PEP_PARSE_SPIDERS
 
 ROBOTSTXT_OBEY = True
 
-DATETIME_FORMAT = '%Y-%m-%d_%H-%M-%S'
-
 BASE_DIR = Path(__file__).parent.parent
+
+DATETIME_FORMAT = '%Y-%m-%d_%H-%M-%S'
 
 BOT_NAME = 'pep_parse'
 FILE_NAME = 'status_summary_{now}.csv'
-HEAD_TABLE = ('Статус', 'Количество')
+HEAD_TABLE = ('Status', 'Count')
+PEPS_DOMAINS = 'peps.python.org'
 RESULTS = 'results'
+RESULTS_DIR = BASE_DIR / RESULTS
 TOTAL = 'Total'
+URL = 'https://{url}/'
 
 FEEDS = {
-    'results/pep_%(time)s.csv': {
+    f'{RESULTS}/pep_%(time)s.csv': {
         'format': 'csv',
         'fields': ['number', 'name', 'status'],
         'overwrite': True
