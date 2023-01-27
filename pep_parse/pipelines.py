@@ -17,9 +17,7 @@ class PepParsePipeline:
 
     def close_spider(self, spider):
         results_dir = BASE_DIR / RESULTS
-        #pytest не даёт закинуть в settings results_dir
         results_dir.mkdir(exist_ok=True)
-        #закинул в конструктор _init_ но pytest выдаёт ошибку
         file_path = results_dir / FILE_NAME.format(
             now=dt.datetime.utcnow().strftime(DATETIME_FORMAT)
         )
