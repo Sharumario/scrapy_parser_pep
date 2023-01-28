@@ -1,9 +1,9 @@
 from pathlib import Path
 
 
-PEP_PARSE_SPIDERS = 'pep_parse.spiders'
-SPIDER_MODULES = [PEP_PARSE_SPIDERS]
-NEWSPIDER_MODULE = PEP_PARSE_SPIDERS
+PEP_PARSE_SPIDER = 'pep_parse.spiders'
+SPIDER_MODULES = [PEP_PARSE_SPIDER]
+NEWSPIDER_MODULE = PEP_PARSE_SPIDER
 
 ROBOTSTXT_OBEY = True
 
@@ -14,14 +14,13 @@ DATETIME_FORMAT = '%Y-%m-%d_%H-%M-%S'
 BOT_NAME = 'pep_parse'
 FILE_NAME = 'status_summary_{now}.csv'
 HEAD_TABLE = ('Status', 'Count')
-PEPS_DOMAINS = 'peps.python.org'
-RESULTS = 'results'
-RESULTS_DIR = BASE_DIR / RESULTS
+PEPS_DOMAIN = 'peps.python.org'
+RESULTS_DIR_NAME = 'results'
 TOTAL = 'Total'
 URL = 'https://{url}/'
 
 FEEDS = {
-    f'{RESULTS}/pep_%(time)s.csv': {
+    f'{RESULTS_DIR_NAME}/pep_%(time)s.csv': {
         'format': 'csv',
         'fields': ['number', 'name', 'status'],
         'overwrite': True

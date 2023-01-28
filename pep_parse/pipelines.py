@@ -3,11 +3,15 @@ import datetime as dt
 from collections import defaultdict
 
 from .settings import (
-    BASE_DIR, DATETIME_FORMAT, FILE_NAME, HEAD_TABLE, RESULTS, TOTAL
+    BASE_DIR, DATETIME_FORMAT, FILE_NAME, HEAD_TABLE, RESULTS_DIR_NAME, TOTAL
 )
 
 
 class PepParsePipeline:
+    def __init__(self):
+        self.result_dir = BASE_DIR / RESULTS_DIR_NAME
+        self.result_dir.mkdir(exist_ok=True)
+
     def open_spider(self, spider):
         self.count_status = defaultdict(int)
 
@@ -16,12 +20,13 @@ class PepParsePipeline:
         return item
 
     def close_spider(self, spider):
-        results_dir = BASE_DIR / RESULTS
-        results_dir.mkdir(exist_ok=True)
-        file_path = results_dir / FILE_NAME.format(
-            now=dt.datetime.utcnow().strftime(DATETIME_FORMAT)
-        )
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open(
+            self.result_dir / FILE_NAME.format(
+                now=dt.datetime.utcnow().strftime(DATETIME_FORMAT)
+            ),
+            'w',
+            encoding='utf-8'
+        ) as f:
             csv.writer(
                 f,
                 dialect=csv.unix_dialect,

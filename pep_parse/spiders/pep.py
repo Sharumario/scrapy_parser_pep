@@ -2,7 +2,7 @@ import re
 import scrapy
 
 from ..items import PepParseItem
-from ..settings import PEPS_DOMAINS, URL
+from ..settings import PEPS_DOMAIN, URL
 
 
 PATERN_NUMBER_NAME = r'\w*\W*(?P<number>\d+)\W+(?P<name>.+)'
@@ -10,8 +10,8 @@ PATERN_NUMBER_NAME = r'\w*\W*(?P<number>\d+)\W+(?P<name>.+)'
 
 class PepSpider(scrapy.Spider):
     name = 'pep'
-    allowed_domains = [PEPS_DOMAINS]
-    start_urls = [URL.format(url=PEPS_DOMAINS)]
+    allowed_domains = [PEPS_DOMAIN]
+    start_urls = [URL.format(url=PEPS_DOMAIN)]
 
     def parse(self, response):
         for pep_link in response.css('#numerical-index tbody tr'):
