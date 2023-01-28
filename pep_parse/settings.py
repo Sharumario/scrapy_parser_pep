@@ -7,9 +7,9 @@ NEWSPIDER_MODULE = PEP_PARSE_SPIDER
 
 ROBOTSTXT_OBEY = True
 
-BASE_DIR = Path(__file__).parent.parent
-
 DATETIME_FORMAT = '%Y-%m-%d_%H-%M-%S'
+
+BASE_DIR = Path(__file__).parent.parent
 
 BOT_NAME = 'pep_parse'
 FILE_NAME = 'status_summary_{now}.csv'

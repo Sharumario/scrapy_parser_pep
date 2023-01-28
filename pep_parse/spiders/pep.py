@@ -21,7 +21,7 @@ class PepSpider(scrapy.Spider):
     def parse_pep(self, response):
         number, name = re.search(
             PATERN_NUMBER_NAME,
-            "".join(response.css("#pep-content h1 ::text").get()),
+            response.css("#pep-content h1 ::text").get(),
         ).groups()
         data = {
             'number': number,

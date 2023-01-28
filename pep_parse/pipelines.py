@@ -8,10 +8,6 @@ from .settings import (
 
 
 class PepParsePipeline:
-    def __init__(self):
-        self.result_dir = BASE_DIR / RESULTS_DIR_NAME
-        self.result_dir.mkdir(exist_ok=True)
-
     def open_spider(self, spider):
         self.count_status = defaultdict(int)
 
@@ -20,8 +16,10 @@ class PepParsePipeline:
         return item
 
     def close_spider(self, spider):
+        result_dir = BASE_DIR / RESULTS_DIR_NAME
+        result_dir.mkdir(exist_ok=True)
         with open(
-            self.result_dir / FILE_NAME.format(
+            result_dir / FILE_NAME.format(
                 now=dt.datetime.utcnow().strftime(DATETIME_FORMAT)
             ),
             'w',
